@@ -1,1 +1,190 @@
-<p>subscription-list works!</p>
+<header class="page-header">
+  <div>
+    <p class="breadcrumb">Overview / Subscriptions</p>
+    <h1>Subscriptions</h1>
+    <p class="page-description">
+      Manage subscription plans, billing cycles, and customer subscriptions.
+    </p>
+  </div>
+
+  <button class="primary-button" type="button">+ Add subscription</button>
+</header>
+
+<!-- Subscription statistics -->
+<section class="stats-grid">
+  <article class="stat-card">
+    <p class="stat-label">Total subscriptions</p>
+    <p class="stat-value">{{ subscriptions.length }}</p>
+    <p class="stat-note">Across all billing plans</p>
+  </article>
+
+  <article class="stat-card">
+    <p class="stat-label">Active subscriptions</p>
+    <p class="stat-value success">{{ activeSubscriptions }}</p>
+    <p class="stat-note">Currently active</p>
+  </article>
+
+  <article class="stat-card">
+    <p class="stat-label">Trial subscriptions</p>
+    <p class="stat-value warning">{{ trialCount }}</p>
+    <p class="stat-note">Trial subscriptions</p>
+  </article>
+
+  <article class="stat-card">
+    <p class="stat-label">Subscription Due</p>
+    <p class="stat-value danger">{{ dueCount }}</p>
+    <p class="stat-note">Payment required</p>
+  </article>
+
+  <article class="stat-card">
+    <p class="stat-label">Monthly recurring revenue</p>
+    <p class="stat-value">
+      {{ monthlyRevenue | currency: 'USD' : 'symbol' : '1.0-0' }}
+    </p>
+    <p class="stat-note">Estimated monthly revenue</p>
+  </article>
+</section>
+
+<!-- Subscriptions table -->
+<section class="subscriptions-section">
+  <div class="section-header">
+    <div>
+      <h2>All subscriptions</h2>
+      <p class="section-description">View and manage your customer subscriptions.</p>
+    </div>
+  </div>
+
+  <div class="table-toolbar">
+    <div class="search-wrapper">
+      <span class="search-icon">⌕</span>
+      <input
+        type="search"
+        placeholder="Search customer or plan..."
+        aria-label="Search subscriptions"
+        [value]="searchTerm"
+        (input)="searchTerm = $any($event.target).value"
+      />
+    </div>
+
+    <select
+      aria-label="Filter by status"
+      [value]="statusFilter"
+      (change)="statusFilter = $any($event.target).value"
+    >
+      <option value="all">All statuses</option>
+      <option value="active">Active</option>
+      <option value="cancelled">Cancelled</option>
+      <option value="past_due">Past due</option>
+    </select>
+
+    <select
+      aria-label="Filter by billing cycle"
+      [value]="billingFilter"
+      (change)="billingFilter = $any($event.target).value"
+    >
+      <option value="all">All billing cycles</option>
+      <option value="monthly">Monthly</option>
+      <option value="yearly">Yearly</option>
+    </select>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="subscriptions-table">
+      <thead>
+        <tr>
+          <th>Customer</th>
+          <th>Plan</th>
+          <th>Amount</th>
+          <th>Billing cycle</th>
+          <th>Next billing</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (subscription of filteredSubscriptions; track subscription.id) {
+          <tr>
+            <td>
+              <div class="customer-cell">
+                <div class="avatar">
+                  {{ subscription.customerName.charAt(0).toUpperCase() }}
+                </div>
+
+                <div>
+                  <p class="customer-name">
+                    {{ subscription.customerName }}
+                  </p>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <span class="plan-name">{{ subscription.plan }}</span>
+            </td>
+
+            <td>
+              <span class="amount">
+                {{ subscription.amount | currency: 'USD' : 'symbol' : '1.0-2' }}
+              </span>
+            </td>
+
+            <td class="capitalize">
+              {{ subscription.billingCycle }}
+            </td>
+
+            <td>{{ subscription.renewalDate | date: 'MMM d, y' }}</td>
+
+            <td>
+              <span
+                class="status-badge"
+                [class.status-active]="subscription.status === 'active'"
+                [class.status-cancelled]="subscription.status === 'cancelled'"
+                [class.status-past-due]="subscription.status === 'past_due'"
+              >
+                <span class="status-dot"></span>
+                {{ subscription.status.replace('_', ' ') }}
+              </span>
+            </td>
+
+            <!-- <td>
+              <button
+                class="more-button"
+                type="button"
+                [attr.aria-label]="'Actions for ' + subscription.customerName"
+                (click)="
+                  selectedSubscriptionId =
+                    selectedSubscriptionId === subscription.id ? null : subscription.id
+                "
+              >
+                ⋯
+              </button>
+
+              @if (selectedSubscriptionId === subscription.id) {
+                <div class="action-menu">
+                  <button type="button" (click)="viewSubscription(subscription.id)">
+                    View details
+                  </button>
+
+                  <button type="button" (click)="selectedSubscriptionId = null">Close menu</button>
+                </div>
+              }
+            </td> -->
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="7" class="empty-state">
+              <div class="empty-icon">⌕</div>
+              <p>No subscriptions found</p>
+              <span>Try changing your search or filters.</span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-footer">
+    <p>Showing {{ filteredSubscriptions.length }} of {{ subscriptions.length }} subscriptions</p>
+  </div>
+</section>
