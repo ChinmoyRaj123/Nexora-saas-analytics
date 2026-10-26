@@ -1,1 +1,205 @@
-<p>transaction-list works!</p>
+<header class="page-header">
+  <div>
+    <p class="breadcrumb">Overview / Transactions</p>
+    <h1>Transactions</h1>
+    <p class="page-description">Track payments, refunds, and transaction statuses.</p>
+  </div>
+
+  <button class="primary-button" type="button">Export transactions</button>
+</header>
+
+<!-- Summary cards -->
+<section class="stats-grid">
+  <article class="stat-card">
+    <div class="stat-card-top">
+      <p class="stat-label">Total transactions</p>
+      <span class="stat-icon icon-purple">↗</span>
+    </div>
+    <p class="stat-value">{{ transactions.length }}</p>
+    <p class="stat-note">All recorded transactions</p>
+  </article>
+
+  <article class="stat-card">
+    <div class="stat-card-top">
+      <p class="stat-label">Successful payments</p>
+      <span class="stat-icon icon-green">✓</span>
+    </div>
+    <p class="stat-value success">{{ successfulCount }}</p>
+    <p class="stat-note">Completed transactions</p>
+  </article>
+
+  <article class="stat-card">
+    <div class="stat-card-top">
+      <p class="stat-label">Failed payments</p>
+      <span class="stat-icon icon-red">!</span>
+    </div>
+    <p class="stat-value danger">{{ failedCount }}</p>
+    <p class="stat-note">Payments that failed</p>
+  </article>
+
+  <article class="stat-card">
+    <div class="stat-card-top">
+      <p class="stat-label">Total collected</p>
+      <span class="stat-icon icon-blue">$</span>
+    </div>
+    <p class="stat-value">
+      {{ totalCollected | currency: 'USD' : 'symbol' : '1.0-0' }}
+    </p>
+    <p class="stat-note">Successful payments only</p>
+  </article>
+</section>
+
+<!-- Transactions table -->
+<section class="transactions-section">
+  <div class="section-header">
+    <div>
+      <h2>All transactions</h2>
+      <p class="section-description">Review payment activity and transaction details.</p>
+    </div>
+  </div>
+
+  <!-- Search and filters -->
+  <div class="table-toolbar">
+    <div class="search-wrapper">
+      <span class="search-icon">⌕</span>
+      <input
+        type="search"
+        placeholder="Search customer or transaction ID..."
+        aria-label="Search transactions"
+        [value]="searchTerm"
+        (input)="searchTerm = $any($event.target).value"
+      />
+    </div>
+
+    <select
+      aria-label="Filter transactions by status"
+      [value]="statusFilter"
+      (change)="statusFilter = $any($event.target).value"
+    >
+      <option value="all">All statuses</option>
+      <option value="successful">Successful</option>
+      <option value="pending">Pending</option>
+      <option value="failed">Failed</option>
+      <option value="refunded">Refunded</option>
+    </select>
+
+    <select
+      aria-label="Filter transactions by type"
+      [value]="typeFilter"
+      (change)="typeFilter = $any($event.target).value"
+    >
+      <option value="all">All types</option>
+      <option value="payment">Payment</option>
+      <option value="refund">Refund</option>
+    </select>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrapper">
+    <table class="transactions-table">
+      <thead>
+        <tr>
+          <th>Transaction</th>
+          <th>Customer</th>
+          <th>Date</th>
+          <th>Payment method</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @if (loading) {
+          <tr>
+            <td colspan="8" class="loading-state">Loading transactions...</td>
+          </tr>
+        } @else {
+          @for (transaction of filteredTransactions; track transaction.id) {
+            <tr>
+              <td>
+                <span class="transaction-id">
+                  {{ transaction.id }}
+                </span>
+              </td>
+
+              <td>
+                <div class="customer-cell">
+                  <div class="avatar">
+                    {{ transaction.customerName.charAt(0).toUpperCase() }}
+                  </div>
+                  <span class="customer-name">
+                    {{ transaction.customerName }}
+                  </span>
+                </div>
+              </td>
+
+              <td>
+                <span class="date-text">
+                  {{ transaction.createdAt | date: 'MMM d, y' }}
+                </span>
+              </td>
+
+              <td>{{ transaction.paymentMethod }}</td>
+
+              <td>
+                <span class="amount" [class.amount-refund]="transaction.status === 'refunded'">
+                  {{ transaction.status === 'refunded' ? '-' : ''
+                  }}{{ transaction.amount | currency: 'USD' : 'symbol' : '1.2-2' }}
+                </span>
+              </td>
+
+              <td>
+                <span
+                  class="status-badge"
+                  [class.status-successful]="transaction.status === 'succeeded'"
+                  [class.status-pending]="transaction.status === 'pending'"
+                  [class.status-failed]="transaction.status === 'failed'"
+                  [class.status-refunded]="transaction.status === 'refunded'"
+                >
+                  <span class="status-dot"></span>
+                  {{ transaction.status }}
+                </span>
+              </td>
+
+              <!-- <td>
+                <button
+                  class="more-button"
+                  type="button"
+                  [attr.aria-label]="'Actions for transaction ' + transaction.id"
+                  (click)="
+                    selectedTransactionId =
+                      selectedTransactionId === transaction.id ? null : transaction.id
+                  "
+                >
+                  ⋯
+                </button>
+
+                @if (selectedTransactionId === transaction.id) {
+                  <div class="action-menu">
+                    <button type="button" (click)="viewTransaction(transaction.id)">
+                      View details
+                    </button>
+                    <button type="button" (click)="selectedTransactionId = null">Close menu</button>
+                  </div>
+                }
+              </td> -->
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="8" class="empty-state">
+                <div class="empty-icon">⌕</div>
+                <p>No transactions found</p>
+                <span> Try changing your search or filters. </span>
+              </td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-footer">
+    <p>Showing {{ filteredTransactions.length }} of {{ transactions.length }} transactions</p>
+  </div>
+</section>

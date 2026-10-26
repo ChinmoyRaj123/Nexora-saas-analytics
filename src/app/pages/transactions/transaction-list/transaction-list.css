@@ -1,0 +1,540 @@
+:host {
+  display: block;
+  color: #172033;
+}
+
+/* Page header */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.breadcrumb {
+  margin: 0 0 10px;
+  color: #8a94a6;
+  font-size: 13px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.7px;
+}
+
+.page-description {
+  margin: 8px 0 0;
+  color: #7a8497;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.primary-button {
+  border: none;
+  border-radius: 8px;
+  background: #4f46e5;
+  color: #fff;
+  padding: 11px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+
+.primary-button:hover {
+  background: #4338ca;
+}
+
+/* Summary cards */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  min-width: 0;
+  padding: 21px;
+  border: 1px solid #e9edf3;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 3%);
+}
+
+.stat-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat-label {
+  margin: 0;
+  color: #7a8497;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.icon-purple {
+  background: #eeedff;
+  color: #5b50d6;
+}
+
+.icon-green {
+  background: #e7f8ef;
+  color: #15945c;
+}
+
+.icon-red {
+  background: #fff0f1;
+  color: #d9465f;
+}
+
+.icon-blue {
+  background: #e9f3ff;
+  color: #2875d6;
+}
+
+.stat-value {
+  margin: 13px 0 7px;
+  color: #172033;
+  font-size: 29px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+}
+
+.stat-value.success {
+  color: #15945c;
+}
+
+.stat-value.danger {
+  color: #d9465f;
+}
+
+.stat-note {
+  margin: 0;
+  color: #98a1b2;
+  font-size: 12px;
+}
+
+/* Main section */
+
+.transactions-section {
+  overflow: visible;
+  border: 1px solid #e9edf3;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 3%);
+}
+
+.section-header {
+  padding: 23px 24px 18px;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.section-description {
+  margin: 7px 0 0;
+  color: #8a94a6;
+  font-size: 13px;
+}
+
+/* Search and filters */
+
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 24px 20px;
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 180px;
+  max-width: 360px;
+  gap: 9px;
+  padding: 0 12px;
+  border: 1px solid #e1e6ee;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.search-icon {
+  color: #8a94a6;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.search-wrapper input {
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #172033;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.search-wrapper:focus-within {
+  border-color: #818cf8;
+  box-shadow: 0 0 0 3px rgb(99 102 241 / 10%);
+}
+
+.table-toolbar select {
+  height: 42px;
+  max-width: 190px;
+  padding: 0 12px;
+  border: 1px solid #e1e6ee;
+  border-radius: 8px;
+  background: #fff;
+  color: #465166;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+}
+
+.table-toolbar select:focus {
+  border-color: #818cf8;
+}
+
+/* Transactions table */
+
+.table-wrapper {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  border-top: 1px solid #edf0f5;
+}
+
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.transactions-table thead {
+  background: #f8fafc;
+}
+
+.transactions-table th {
+  padding: 14px 18px;
+  color: #8a94a6;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.transactions-table th:first-child,
+.transactions-table td:first-child {
+  padding-left: 24px;
+}
+
+.transactions-table td {
+  position: relative;
+  padding: 16px 18px;
+  border-top: 1px solid #f0f2f6;
+  color: #586276;
+  font-size: 13px;
+}
+
+.transactions-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.transactions-table tbody tr:hover {
+  background: #fafbff;
+}
+
+.transaction-id {
+  color: #4f46e5;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.customer-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 35px;
+  height: 35px;
+  border-radius: 9px;
+  background: #eeedff;
+  color: #5145cd;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.customer-name {
+  color: #202a3d;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.date-text {
+  color: #667085;
+}
+
+/* Transaction type */
+
+.type-badge {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.type-payment {
+  background: #eef2ff;
+  color: #5145cd;
+}
+
+.type-refund {
+  background: #fff0f1;
+  color: #d9465f;
+}
+
+.amount {
+  color: #202a3d;
+  font-weight: 650;
+}
+
+.amount-refund {
+  color: #d9465f;
+}
+
+/* Status */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-successful {
+  background: #e8f8ef;
+  color: #15945c;
+}
+
+.status-pending {
+  background: #fff5df;
+  color: #b7791f;
+}
+
+.status-failed {
+  background: #fff0f1;
+  color: #d9465f;
+}
+
+.status-refunded {
+  background: #f1edff;
+  color: #7552c7;
+}
+
+/* Row actions */
+
+.more-button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: #7c879a;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.more-button:hover {
+  border-color: #e4e8ef;
+  background: #f5f7fb;
+}
+
+.action-menu {
+  position: absolute;
+  z-index: 5;
+  top: 48px;
+  right: 12px;
+  display: grid;
+  min-width: 140px;
+  padding: 5px;
+  border: 1px solid #e7eaf0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgb(15 23 42 / 12%);
+}
+
+.action-menu button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: #465166;
+  text-align: left;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.action-menu button:hover {
+  background: #f5f7fb;
+}
+
+/* Loading and empty states */
+
+.loading-state {
+  padding: 40px !important;
+  color: #8a94a6 !important;
+  text-align: center;
+}
+
+.empty-state {
+  padding: 48px 20px !important;
+  text-align: center;
+}
+
+.empty-icon {
+  margin-bottom: 10px;
+  color: #9aa4b5;
+  font-size: 30px;
+}
+
+.empty-state p {
+  margin: 0 0 7px;
+  color: #354056;
+  font-weight: 600;
+}
+
+.empty-state span {
+  color: #8a94a6;
+  font-size: 12px;
+}
+
+/* Footer */
+
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-top: 1px solid #edf0f5;
+}
+
+.table-footer p {
+  margin: 0;
+  color: #8a94a6;
+  font-size: 12px;
+}
+
+/* Responsive layout */
+
+@media (max-width: 1100px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .page-header {
+    flex-direction: column;
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+  .stats-grid {
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 16px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  .table-toolbar {
+    flex-wrap: wrap;
+    padding: 0 16px 16px;
+  }
+
+  .search-wrapper {
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  .table-toolbar select {
+    flex: 1;
+    max-width: none;
+  }
+
+  .section-header {
+    padding: 20px 16px;
+  }
+
+  .transactions-table th:first-child,
+  .transactions-table td:first-child {
+    padding-left: 16px;
+  }
+
+  .table-footer {
+    padding: 14px 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
