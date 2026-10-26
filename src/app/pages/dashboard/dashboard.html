@@ -1,0 +1,78 @@
+<header class="page-header">
+  <p class="breadcrumb">Overview / Dashboard</p>
+
+  <h1>Dashboard</h1>
+
+  <p class="page-description">Monitor your customers and subscription business.</p>
+</header>
+
+@if (loading) {
+  <p class="loading-message">Loading dashboard...</p>
+} @else {
+  <section class="stats-grid">
+    <article class="stat-card">
+      <p class="stat-label">Total customers</p>
+      <p class="stat-value">{{ totalCustomers }}</p>
+    </article>
+
+    <article class="stat-card">
+      <p class="stat-label">Active customers</p>
+      <p class="stat-value success">{{ activeCustomers }}</p>
+    </article>
+
+    <article class="stat-card">
+      <p class="stat-label">Monthly revenue</p>
+      <p class="stat-value">
+        {{ 12450 | currency: 'USD' : 'symbol' : '1.0-0' }}
+      </p>
+      <p class="stat-note">Sample dashboard metric</p>
+    </article>
+
+    <article class="stat-card">
+      <p class="stat-label">Active subscriptions</p>
+      <p class="stat-value">128</p>
+      <p class="stat-note">Sample dashboard metric</p>
+    </article>
+  </section>
+
+  <section class="customers-section">
+    <h2>Recent customers</h2>
+
+    <div class="table-wrapper">
+      <table class="customers-table">
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Company</th>
+            <th>Plan</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (customer of customers.slice(0, 5); track customer.id) {
+            <tr>
+              <td>
+                <p class="customer-name">{{ customer.name }}</p>
+                <p class="customer-email">{{ customer.email }}</p>
+              </td>
+
+              <td>{{ customer.company }}</td>
+              <td class="capitalize">{{ customer.plan }}</td>
+
+              <td>
+                <span
+                  class="status-badge"
+                  [class.status-active]="customer.status === 'active'"
+                  [class.status-inactive]="customer.status !== 'active'"
+                >
+                  {{ customer.status }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+}
